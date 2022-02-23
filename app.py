@@ -4,6 +4,7 @@ from server import matriculas, select_query
 
 app = Flask(__name__)
 
+#Rora padrão
 @app.route('/')
 def home():
   return select_query('select top 10 pes_id_pessoa, pes_nm_pessoa, pes_nu_cpf_cgc from pes_pessoa')
