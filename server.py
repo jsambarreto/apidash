@@ -4,12 +4,13 @@ from flask import jsonify
 import pyodbc 
 import json
 import enviroment
+from models.pessoa import Pessoa
 
 # Some other example server values are
 # server = 'localhost\sqlexpress' # for a named instance
 # server = 'myserver,port' # to specify an alternate port
-server = 'tcp:192.168.0.31' 
-database = 'academico' 
+server = enviroment.server 
+database = enviroment.database
 username = enviroment.username
 password = enviroment.password
 cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)

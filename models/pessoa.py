@@ -39,18 +39,18 @@ def to_class(c: Type[T], x: Any) -> dict:
 
 
 @dataclass
-class WelcomeElement:
+class Pessoa:
     id: int
     nome: str
     cpf: None
 
     @staticmethod
-    def from_dict(obj: Any) -> 'WelcomeElement':
+    def from_dict(obj: Any) -> 'Pessoa':
         assert isinstance(obj, dict)
         id = from_int(obj.get("id"))
         nome = from_str(obj.get("nome"))
         cpf = from_none(obj.get("cpf"))
-        return WelcomeElement(id, nome, cpf)
+        return Pessoa(id, nome, cpf)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -60,9 +60,9 @@ class WelcomeElement:
         return result
 
 
-def welcome_from_dict(s: Any) -> List[WelcomeElement]:
-    return from_list(WelcomeElement.from_dict, s)
+def welcome_from_dict(s: Any) -> List[Pessoa]:
+    return from_list(Pessoa.from_dict, s)
 
 
-def welcome_to_dict(x: List[WelcomeElement]) -> Any:
-    return from_list(lambda x: to_class(WelcomeElement, x), x)
+def welcome_to_dict(x: List[Pessoa]) -> Any:
+    return from_list(lambda x: to_class(Pessoa, x), x)
