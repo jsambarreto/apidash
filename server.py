@@ -1,10 +1,7 @@
 import collections
-from typing import Collection
-from flask import jsonify
 import pyodbc 
 import json
 import enviroment
-from models.pessoa import Pessoa
 
 # Some other example server values are
 # server = 'localhost\sqlexpress' # for a named instance
