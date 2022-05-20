@@ -66,3 +66,27 @@ def matriculas(query):
         objects_list.append(d)
     j = json.dumps(objects_list)
     return j
+
+def vagas(query):
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    objects_list = []
+    for row in rows:
+        d = collections.OrderedDict()
+        d["ID_ESCOLA"] = int(row[0])
+        d["SERIE"] = row[1]
+        d["CURSANDO"] = row[2]
+        d["CAPACIDADE"] = row[3]
+        d["VAGAS"] = row[4]
+        d["ID_ESCOLA"] = int(row[5])
+        d["ESCOLA_RESUMIDO"] = row[6]
+        d["ESCOLA_COMPLETO"] = row[7]
+        d["DIRETOR"] = row[8]
+        d["TELEFONE"] = row[9]
+        d["LATITUDE"] = row[10]
+        d["LONGITUDE"] = row[11]
+        d["ENDERECO"] = row[12]
+        d["EMAIL"] = row[13]
+        objects_list.append(d)
+    j = json.dumps(objects_list)
+    return j
