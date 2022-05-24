@@ -1,6 +1,6 @@
 from flask import Flask
 
-from server import matriculas, select_query, vagas
+from server import lista_escolas, matriculas, select_query, vagas
 
 app = Flask(__name__)
 
@@ -32,6 +32,10 @@ def matricula_escola_ano(idEscola: int, ano: int):
 @app.route('/vagas')
 def vagas_rota():
   return vagas('select * from api_escolas_vagas VAG join api_escolas ESC on ESC.ID_ESCOLA = VAG.ID_ESCOLA')
+
+@app.route('/lista-escolas')
+def lista_escolas_rota():
+  return lista_escolas('select distinct VAG.id_escola, escola_completo from api_escolas_vagas VAG join api_escolas ESC on ESC.ID_ESCOLA = VAG.ID_ESCOLA')  
 
 @app.route('/vagas/<idEscola>')
 def vagas_escola(idEscola: int):

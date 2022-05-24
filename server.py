@@ -90,3 +90,15 @@ def vagas(query):
         objects_list.append(d)
     j = json.dumps(objects_list)
     return j
+
+def lista_escolas(query):
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    objects_list = []
+    for row in rows:
+        d = collections.OrderedDict()
+        d["ID_ESCOLA"] = int(row[0])
+        d["ESCOLA_COMPLETO"] = row[1]
+        objects_list.append(d)
+    j = json.dumps(objects_list)
+    return j
