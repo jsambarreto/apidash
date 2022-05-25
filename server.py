@@ -1,7 +1,11 @@
+from base64 import encode
 import collections
+
 import pyodbc 
 import json
 import enviroment
+from models.matriculas import welcome_from_dict
+from models.vagas import Escola
 
 # Some other example server values are
 # server = 'localhost\sqlexpress' # for a named instance
@@ -10,12 +14,13 @@ server = enviroment.server
 database = enviroment.database
 username = enviroment.username
 password = enviroment.password
-cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-cursor = cnxn.cursor()
+
 data=[]
 #Sample select query
 #query = 'select pes_id_pessoa, pes_nm_pessoa, pes_nu_cpf_cgc from pes_pessoa'
 def select_query(query):
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+    cursor = cnxn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
     objects_list = []
@@ -27,9 +32,12 @@ def select_query(query):
         objects_list.append(d)
 
     j = json.dumps(objects_list)
+    cursor.close()
     return j
 #print(select_query('select top 10 pes_id_pessoa, pes_nm_pessoa, pes_nu_cpf_cgc from pes_pessoa'))
 def matriculas(query):
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+    cursor = cnxn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
     objects_list = []
@@ -65,9 +73,12 @@ def matriculas(query):
         d["Total"] = row[27]
         objects_list.append(d)
     j = json.dumps(objects_list)
+    cursor.close()
     return j
 
 def vagas(query):
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+    cursor = cnxn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
     objects_list = []
@@ -89,9 +100,12 @@ def vagas(query):
         d["EMAIL"] = row[13]
         objects_list.append(d)
     j = json.dumps(objects_list)
+    cursor.close()
     return j
 
 def lista_escolas(query):
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+    cursor = cnxn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
     objects_list = []
@@ -101,4 +115,25 @@ def lista_escolas(query):
         d["ESCOLA_COMPLETO"] = row[1]
         objects_list.append(d)
     j = json.dumps(objects_list)
+    cursor.close()
     return j
+
+#Em teste#
+def escola_encoder(escola):
+    if isinstance(escola, Escola):
+        return{'ID_ESCOLA':escola.email, 'ESCOLA_COMPLETO':escola.escola_completo }
+    raise TypeError(f'Object {escola} is not of type Escola')
+
+
+def vagas_teste(query):
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+    cursor = cnxn.cursor()
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    object_list=[]
+    for row in rows:
+        json_escola = json.dumps(row, default=escola_encoder, indent=4)
+        object_list.append(json_escola)
+    cursor.close()
+    return object_list
+#####
