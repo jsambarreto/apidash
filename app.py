@@ -43,7 +43,7 @@ def vagas_escola(idEscola: int):
 #######Teste
 @app.route('/vagas/teste')
 def vagas_escola_teste():
-  return vagas_teste('select distinct VAG.id_escola, escola_completo from api_escolas_vagas VAG join api_escolas ESC on ESC.ID_ESCOLA = VAG.ID_ESCOLA')
+  return vagas_teste('select * from api_escolas_vagas VAG join api_escolas ESC on ESC.ID_ESCOLA = VAG.ID_ESCOLA')
 #######
 
 if __name__ == "__main__":
