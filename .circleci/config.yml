@@ -13,7 +13,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - docker/build:
-          image: apidash2 
+          image: apidash
 
 workflows:
   example-workflow:
